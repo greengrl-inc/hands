@@ -2,7 +2,7 @@ let handPose;
 let video;
 let hands = [];
 let d;
-let osc, playing, frq, amp;
+let osc, frq, amp;
 
 function preload() {
     handPose = ml5.handPose({ flipped: true });
@@ -34,7 +34,8 @@ function draw() {
         let hand = hands[i];
         if (hand.confidence > 0.7) {
 
-            // volume - codingtrain
+            // volume - modified from the pen width example
+            // https://thecodingtrain.com/tracks/ml5js-beginners-guide/ml5/hand-pose
             if (hand.handedness == "Left") {
                 let index = hand.index_finger_tip;
                 let thumb = hand.thumb_tip;
@@ -50,8 +51,8 @@ function draw() {
                 } else {
                     osc.stop();
                 }
-
-                amp = map(d, 0, 200, 0, 1);
+                
+                amp = map(d, 19, 200, 0, 1);
                 osc.amp(round(amp, .5));
             }
 
@@ -59,7 +60,7 @@ function draw() {
             if (hand.handedness == "Right") {
                 let index = hand.index_finger_tip.y;
                 
-                frq = constrain(map(index, 0, height, 100, 500), 100, 500);
+                frq = map(index, 0, height, 500, 100);
                 osc.freq(frq, 0.1);
             }
 
