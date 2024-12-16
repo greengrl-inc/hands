@@ -22,6 +22,8 @@ function setup() {
     osc.setType('sine');
 }
 
+// reference: heavily inspired by coding train's HandPose Painting 
+// https://editor.p5js.org/codingtrain/sketches/-C3Og5Wzs
 function draw() {
     background(25);
     // video on the left hand side 
@@ -32,7 +34,8 @@ function draw() {
         let hand = hands[i];
         for (let j = 0; j < hand.keypoints.length; j++) {
             let keypoint = hand.keypoints[j];
-            fill(0, 255, 0);
+            fill(186, 255, 223, 200);
+            // 
             noStroke();
             circle(keypoint.x + 260, keypoint.y, 5);
         }
@@ -48,7 +51,7 @@ function draw() {
 
             if (d > 25) {
                 osc.start();
-                fill(255, 0, 150);
+                fill(150, 230, 179, 230);
                 circle(x + 260, y, d * .87);
             } else {
                 osc.stop();
@@ -60,7 +63,8 @@ function draw() {
 
         if (hand.handedness == "Right") {
             let indexY = hand.index_finger_tip.y;
-            frequency = map(indexY, 0, 480, 500, 100, true);
+            frq = map(indexY, 0, 480, 500, 100, true);
+            osc.freq(frq);
         }
 
     }
