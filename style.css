@@ -6,6 +6,7 @@ body {
     align-content: center; /* vertical */
     justify-content: center; /* horizontal */
     height: 100%;
+    background-color: black;
 }
 
 canvas {
