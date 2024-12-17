@@ -27,21 +27,41 @@ function setup() {
 function draw() {
     background(25);
     // video on the left hand side 
-    image(video, 0, 0, 800, 600);
+    // image(video, 0, 0, 800, 600);
 
-    // Draw all the tracked hand points
+    // reference: coding train asci art
+    // https://editor.p5js.org/codingtrain/sketches/KTVfEcpWx
+    // pixel cam
+    let pixelSize = 10; // control resolution
+    let pixW = width / pixelSize;
+    let pixH = height / pixelSize;
+
+    // draw each pixel
+    video.loadPixels();
+    for (let y = 0; y < pixH; y++) {
+        for (let x = 0; x < pixW; x++) {
+            let i = (y * pixelSize * video.width + x * pixelSize) * 4;
+            let r = video.pixels[i];
+            let g = video.pixels[i + 1];
+            let b = video.pixels[i + 2];
+            fill(r, g, b);
+            noStroke();
+            rect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+        }
+    }
+
+    // draw tracked hand points
     for (let i = 0; i < hands.length; i++) {
         let hand = hands[i];
         if (hand.confidence > 0.85) {
-            // https://p5js.org/tutorials/simple-melody-app/
             // only start once
+            // https://p5js.org/tutorials/simple-melody-app/
             if (!osc.started) {
                 osc.start();
             }
             for (let j = 0; j < hand.keypoints.length; j++) {
                 let keypoint = hand.keypoints[j];
-                fill(186, 255, 223, 200);
-                // 
+                fill(186, 255, 223, 200); // greenish blue
                 noStroke();
                 circle(keypoint.x, keypoint.y, 5);
             }
@@ -56,7 +76,7 @@ function draw() {
                 d = dist(index.x, index.y, thumb.x, thumb.y);
                 d = Math.round(d / 10) * 10;
 
-
+                // controls volume based of circle diameter
                 if (d > 25) {
                     fill(150, 230, 179, 230);
                     circle(x, y, d);
@@ -77,13 +97,14 @@ function draw() {
                 let indexX = hand.index_finger_tip.x;
                 let indexY = hand.index_finger_tip.y;
 
+                // set osc type and visual feedback
                 if (indexX > 700 && indexY < 300) {
                     osc.setType('sine');
-                    fill(255, 0, 0, 100);
+                    fill(41, 115, 115, 100); // blue-green
                     rect(790, 0, 10, 300);
                 } else if (indexX > 700 && indexY >= 300 && indexY < 600) {
                     osc.setType('square');
-                    fill(0, 0, 255, 100);
+                    fill(255, 133, 82, 100); // orange
                     rect(790, 300, 10, 300);
                 } else {
                     osc.setType('sawtooth');
