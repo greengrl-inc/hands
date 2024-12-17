@@ -98,13 +98,13 @@ function draw() {
                 let indexY = hand.index_finger_tip.y;
 
                 // set osc type and visual feedback
-                if (indexX > 700 && indexY < 300) { // top right
+                if (indexX > 600 && indexY < 300) { // top right
                     osc.setType('sine');
-                    fill(41, 115, 115, 100); // blue-green
+                    fill(41, 115, 115, 50); // blue-green
                     rect(790, 0, 10, 300);
-                } else if (indexX > 700 && indexY >= 300 && indexY < 600) { // bottom right
+                } else if (indexX > 600 && indexY >= 300 && indexY < 600) { // bottom right
                     osc.setType('square');
-                    fill(255, 133, 82, 100); // orange
+                    fill(255, 133, 82, 50); // orange
                     rect(790, 300, 10, 300);
                 } else {
                     osc.setType('sawtooth');
