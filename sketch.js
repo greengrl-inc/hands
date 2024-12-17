@@ -63,7 +63,7 @@ function draw() {
                 let keypoint = hand.keypoints[j];
                 fill(186, 255, 223, 200); // greenish blue
                 noStroke();
-                circle(keypoint.x, keypoint.y, 5);
+                circle(keypoint.x, keypoint.y, 5); // small circles at keypoints
             }
 
             if (hand.handedness == "Left") {
@@ -73,8 +73,8 @@ function draw() {
                 let x = (index.x + thumb.x) / 2; // average dist
                 let y = (index.y + thumb.y) / 2; // average dist
 
-                d = dist(index.x, index.y, thumb.x, thumb.y);
-                d = Math.round(d / 10) * 10;
+                d = dist(index.x, index.y, thumb.x, thumb.y); // dist btwn fingers
+                d = Math.round(d / 10) * 10; // round to then tens
 
                 // controls volume based of circle diameter
                 if (d > 25) {
@@ -86,7 +86,7 @@ function draw() {
                 }
 
                 amp = map(d, 25, 200, 0, 1, true);
-                amp = round(amp, 2);
+                amp = round(amp, 2); // round to 2 decimals
                 osc.amp(amp);
 
                 frq = map(thumb.y, 0, 480, 480, 10, true);
@@ -98,11 +98,11 @@ function draw() {
                 let indexY = hand.index_finger_tip.y;
 
                 // set osc type and visual feedback
-                if (indexX > 700 && indexY < 300) {
+                if (indexX > 700 && indexY < 300) { // top right
                     osc.setType('sine');
                     fill(41, 115, 115, 100); // blue-green
                     rect(790, 0, 10, 300);
-                } else if (indexX > 700 && indexY >= 300 && indexY < 600) {
+                } else if (indexX > 700 && indexY >= 300 && indexY < 600) { // bottom right
                     osc.setType('square');
                     fill(255, 133, 82, 100); // orange
                     rect(790, 300, 10, 300);
